@@ -1,0 +1,30 @@
+<html>
+{% extends 'base.html' %}
+
+{% block head %}
+<center><h2><u>Delete Subjects</u></h2></center>
+{% endblock %}
+
+
+{% block body %}
+<br>
+<br>
+<center>
+  <form method=post>
+  <select id="subject" name="subject">
+    <option>Select Subject</option>
+    {% for key, value in subjects.items() %}
+      <option value= "{{ key }}" > {{ value }} </option>
+    {% endfor %}
+  
+    <!-- Iterating through subjects dictionary to create options for the user with the key as the subjectid and the value as the subject name -->
+  </select>    
+  <br>
+  <br>
+  <button type="Submit" id=button name=button>Next</button>
+</center>
+{% endblock %}
+ </form>
+
+
+</html>

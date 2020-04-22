@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% block head %}
+<center><h2><u>Add Subject</u></h2></center>
+{% endblock %}
+
+
+{% block body %}
+<center>
+<form method=post>
+<div class="field_wrapper">
+    <div>
+        <input type="text" id="subject" name="subject" placeholder="Subject:" size ="40" required>&emsp;&emsp;
+        <input type="color" id="colour" name="colour" value="#ff0000">
+        <a href="javascript:void(0);" class="add_button" title="Add field"><button id=button name=button>Add Another Subject</button></a> &emsp;
+        <!--<a href=http://localhost:5000/UserPreferences><button type="Submit" id=button name=button>Next</button></a>-->
+        <button type="Submit" id=button name=button>Submit</button>
+    </div>
+</div>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var x = 0;
+
+    //Once add button is clicked
+    $(addButton).click(function(e){
+        e.preventDefault();
+        //Check maximum number of input fields
+        if(x < maxField){
+            x++; //Increment field counter
+            var fieldHTML = '<br><div><input type="text" id="subject" name="subject'+ x +'" placeholder="Subject:" size ="40" required>&emsp;&emsp;<input type="color" id="colour" name="colour'+ x +'" value="#ff0000">&emsp;&emsp;<a href="javascript:void(0);" class="remove_button">Remove</a></div>'; //New input field html
+            $(wrapper).append(fieldHTML); //Add field html
+
+        }
+    });
+
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+});
+</script>
+
+{% endblock %}

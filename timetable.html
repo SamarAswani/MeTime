@@ -1,0 +1,44 @@
+<html>
+{% extends 'base.html' %}
+
+{% block head %}
+<center><h2><u>Timetable</u></h2></center>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<center><input type="button" onclick="location.href='http://localhost:5000/EditTasks';" value ="Edit Tasks"/>&emsp;&emsp;<input type="button" onclick="location.href='http://localhost:5000/EditSubjects';" value ="Edit Subjects"/>&emsp;&emsp;<input type="button" onclick="location.href='http://localhost:5000/UserPreferences';" value ="Edit Preferences"/> &emsp;&emsp;<input type="button" onclick="location.href='http://localhost:5000/DayTimes';" value ="Edit Times"/> &emsp;&emsp;&emsp;&emsp; <b><font color="{{ levelColour }}"> Minutes of Work: {{ CurrentTime }} &emsp; Level: {{ level }}</font></b></center>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg .tg-cly1{text-align:left;vertical-align:middle}
+.tg .tg-upfr{font-weight:bold;text-decoration:underline;font-size:28px;background-color:#333333;color:#ffffff;border-color:#ffffff;text-align:left;vertical-align:middle}
+.tg .tg-0a7q{text-align:left;vertical-align:middle}
+.tg .tg-81u1{text-align:left;vertical-align:middle}
+</style>
+<!-- CSS for timetable -->
+{% endblock %}
+
+
+{% block body %}
+<br>
+{% for day, value in timetable.items() %}
+<table class="tg" style="undefined;table-layout: fixed; width: 424px" align = "center">
+<colgroup>
+<col style="width: 122px">
+<col style="width: 190px">
+<col style="width: 112px">
+</colgroup>
+  <tr>
+    <th class="tg-upfr" colspan="2">{{ day }}</th>
+    <th class="tg-0a7q"></th>
+  </tr>
+  {% for task, time in value.items() %}
+  <tr>
+    <td class="tg-81u1" colspan="2" bgcolor="{{ colours[task] }}">{{ task }}</td>
+    <td class="tg-cly1">{{ time }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+{% endfor %}
+</html>
+{% endblock %}
+<!-- Iterating through the timetable dictionary and the value dictionary inside it to create the timetable using multiple tables in html -->
+<!-- Uses the colours dictionary to acquire the background colour for each task -->

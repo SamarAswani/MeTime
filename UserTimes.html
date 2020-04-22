@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+<center><h2><u>Times</u></h2></center>
+<style>
+textDate {
+  margin-left:100px;
+}
+divBox {
+  background-color: lightgrey;
+  width: 100px;
+  padding: 10px;
+  margin-top: 50px;
+}
+#zoom{
+  overflow-x: scroll;
+  width: auto;
+  white-space: nowrap;
+  }
+table.zoom {
+  overflow-x: scroll;
+  width: auto;
+  white-space: nowrap;
+}
+</style>
+{% endblock %}
+{% block body %}
+
+  {% for day, item in dayTimes.items() %}
+  <div>
+  <textDate>
+    <u><b>{{ day }}</b></u>
+  </textDate>
+  </div>
+  <br>
+  <table class = "zoom">
+    <tr>
+    {% for time in item %}
+    <th>
+      <divBox id="{{ day }}{{ time }}" class="change">
+          {{ time }}
+      </divBox>
+    </th>
+  {% endfor %}
+  </tr>
+</table>
+<br>
+{% endfor % }  <!-- Iterating through the arrays in the dictionary dayTimes that contain the times for each day displayed in the boxes on the page-->
+<button type="Submit" id=button name=button onclick= "func();">Next</button>
+
+<script type="text/javascript">
+  var jsonArr = [] //stores output that gets sent back 
+  var changedTimes = [] //stores times that have been changed
+  var available = [] //stores available times
+  var preferred = [] //stores preferred times
+
+$(document).ready(function(){
+  $(".change").on({
+    click: function(){
+      var id = $(this).attr('id');
+      changedTimes.push(id);
+      var colour = $(this).css("background-color");
+      if (colour == "rgb(211, 211, 211)"){
+        $(this).css("background-color", "yellow");
+      }
+      else if (colour == "rgb(255, 255, 0)"){
+        $(this).css("background-color", "green");
+      }
+      else{
+        $(this).css("background-color", "lightgrey");
+      }
+  }          //this function changes the colours of the boxes that are clicked on
+            // it also stores the values in teh boxes that have been clicked on in the changedTimes array
+        });
+});
+
+function func(){
+
+  for(let i=0; i<changedTimes.length; i++){
+    var element = document.getElementById(changedTimes[i]);
+    var colour = $(element).css("background-color");
+    if (colour == "rgb(211, 211, 211)"){
+      var j=available.indexOf(changedTimes[i]);
+      if (j >-1){  //checks if value is in array
+        available.splice(j,1);  //the splice function appends the value to the array
+      }
+      var k=preferred.indexOf(changedTimes[i]);
+      if (k>-1){
+        preferred.splice(k,1);
+      }
+
+    }
+    else if (colour == "rgb(255, 255, 0)"){
+      available.push(changedTimes[i]);
+      var j = preferred.indexOf(changedTimes[i]);
+      if(j>-1){
+        preferred.splice(j,1)
+      }
+    }
+    else if (colour == "rgb(0, 128, 0)"){
+      var k = preferred.indexOf(changedTimes[i]);
+      if (k>-1){
+        var j = available.indexOf(changedTimes[i]);
+        if(j>-1){
+          available.splice(j,1)
+      }
+    }
+
+      else{
+        preferred.push(changedTimes[i]);
+        var j = available.indexOf(changedTimes[i]);
+        if(j>-1){
+          available.splice(j,1);  
+
+      }
+      }
+    } //this function sorts and adds preferred and available tasks to their appropriate arrays
+
+  }
+
+  jsonArr.push(available);
+  jsonArr.push(preferred);
+
+//pushes both arrays into one array that gets posted back to app.py
+
+  $.ajax({
+         type: "POST",
+         contentType: "application/json;charset=utf-8",
+         url: "/UserTimes",
+         traditional: "true",
+         data: JSON.stringify({jsonArr}),
+         dataType: "json"
+
+         }); //posts array back to app.py by converting it into a JSON array and using an ajax call
+  $.ajax({
+               
+               success: function(){
+                  window.location.href = "{{ redirectPage }}"   
+
+               } //uses success ajax call to redirect page
+           });
+
+};
+
+
+
+</script>
+
+{% endblock %}

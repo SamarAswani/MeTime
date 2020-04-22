@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<center><h2><u>Log In</u></h2>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <font color="red"><li>{{ message }}</li></font>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<!-- <font color="red"><li>Account Registered</li></font> -->
+</center>
+{% endblock %}
+{% block body %}
+
+  <center>
+  <form id="MainForm" method="post">
+    <p align="center">
+    <div>
+      <input type="email" id="email" name="email" placeholder="Email:" size ="60" required/>&emsp;
+    </div>
+    <br>
+    <div>
+    <input type="password" id="password" name="password" placeholder="Password:" size ="40" required/>&emsp;
+    <br>
+    <br>
+      <input type="button" id=button name=button onclick="location.href='http://localhost:5000/register';" value ="Create An Account"/>&emsp;<button type="button" id=button name=button>Forgot Password</button>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<button type="Submit" id=button name=button>Submit</button>
+  </center>
+
+    </div>
+  </form>
+{% endblock %}

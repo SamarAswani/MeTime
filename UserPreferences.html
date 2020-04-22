@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% block head %}
+<center><h2><u>Preferences</u></h2></center>
+<br>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <font color="red"><li>{{ message }}</li></font>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<center><font color="red">{{error}}</font></center>
+{% endblock %}
+{% block body %}
+<div>
+  <center>
+  <form id="MainForm" method="post">
+    <div>
+      <b>Duration of blocks (minutes)<b> &emsp;&emsp;
+      <select name = "duration" required>
+        <option value=30>30</option>
+        <option value=60>60</option>
+        <option value=90>90</option>
+        <option value=90>120</option>
+      </select>
+    </div>
+    <br>
+    <br>
+    <div>
+      <b>Number of Days for Early and Late Priority: (1-5 days)<b> &emsp;
+      <input type="number" id="EorL" name="EorL" placeholder="Days:" size="20" required/>
+    </div>
+    <br>
+
+
+    <button type="Submit" id=button name=button>Next</button>
+
+  </form>
+</div>
+{% endblock %}

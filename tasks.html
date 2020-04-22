@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% block head %}
+<center><h2><u>Add Tasks</u></h2></center>
+{% endblock %}
+
+<br>
+
+{% block body %}
+<center>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <font color="red"><li>{{ message }}</li></font>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+<font color="red">{{error}}</font>
+<form method=post>
+<div class="field_wrapper">
+    <div>
+        <input type="text" id="task" name="task" placeholder="Task Name:" size ="40" required>&emsp;&emsp;
+        <select id="subject" name="subject" required>
+          <option>Select Subject</option>
+          {% for item in subjects %}
+            {% for key, subject in item.items() %}
+            <option value= "{{ subject }}" > {{ subject }} </option>
+            {% endfor %}
+          {% endfor %}
+        </select>
+        <br>
+        <br>
+        Due Date:
+        <input type="date" id="DueDate" name="DueDate" required>&emsp;&emsp;
+        <br>
+        <br>
+        <input type="number" id="duration" name="duration" placeholder="Duration (minutes):" size ="20" required> &emsp;&emsp;
+        <select name="priority" required>
+          <option>Select Priority</option>
+          <option value="early">Early</option>
+          <option value="scattered">Scattered</option>
+          <option value="late">Late</option>
+        </select>&emsp;&emsp;
+        <a href="javascript:void(0);" class="add_button" title="Add field"><button id=button name=button>Add Another Task</button></a> &emsp;
+        <!--<a href=http://localhost:5000/UserPreferences><button type="Submit" id=button name=button>Next</button></a>-->
+        <button type="Submit" id=button name=button>Submit</button>
+    </div>
+</div>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    //var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var x = 0;
+
+    //Once add button is clicked
+    $(addButton).click(function(e){
+        e.preventDefault();
+        //Check maximum number of input fields
+        //if(x < maxField){
+        x++; //Increment field counter
+        var fieldHTML = '<br><div><input type="text" id="task" name="task'+ x +'" placeholder="Task Name:" size ="40" required>&emsp;&emsp;<select id="subject" name="subject'+ x +'" required><option>Select Subject</option>{% for item in subjects %}{% for key, subject in item.items() %}<option value= "{{ subject }}"" > {{ subject }} </option>{% endfor %}{% endfor %}</select><br><br>Due Date:<input type="date" id="DueDate" name="DueDate'+ x +'" required>&emsp;&emsp;<br><br><input type="number" id="duration" name="duration'+ x +'" placeholder="Duration (minutes):" size ="20" required> &emsp;&emsp;<select name="priority'+ x +'" required><option>Select Priority</option><option value="early">Early</option><option value="scattered">Scattered</option><option value="late">Late</option></select>&emsp;&emsp;<a href="javascript:void(0);" class="remove_button">Remove</a></div>';
+        $(wrapper).append(fieldHTML); //Add field html
+
+        //}
+    });
+
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+});
+</script>
+
+{% endblock %}

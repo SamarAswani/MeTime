@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% block head %}
+<center><h2><u>Sleep Schedules</u></h2></center>
+
+{% endblock %}
+
+{% block body %}
+<form method=post>
+<center>
+  <b>Please enter the times you wake up in the left boxes and the times you sleep in the right boxes</b>
+  <br>
+  <br>
+  Sunday:  &emsp;
+  <input type="time" id="wakeup1" name="wakeup1" required>&emsp;
+  <input type="time" id="sleep1" name="sleep1" required>&emsp;
+  Same for all weekdays &emsp;<input type="checkbox" id="weekdays" name="weekdays" onclick="weekdaysFunc()"> &emsp;
+  Same for everyday &emsp;<input type="checkbox" id="alldays" name="alldays" onclick="alldaysFunc()">
+
+  <br>
+  <br>
+  Monday:  &emsp;
+  <input type="time" id="wakeup2" name="wakeup2" required>&emsp;
+  <input type="time" id="sleep2" name="sleep2" required>&emsp;
+  <br>
+  <br>
+  Tuesday:  &emsp;
+  <input type="time" id="wakeup3" name="wakeup3" required>&emsp;
+  <input type="time" id="sleep3" name="sleep3" required>&emsp;
+  <br>
+  <br>
+  Wednesday:  &emsp;
+  <input type="time" id="wakeup4" name="wakeup4" required>&emsp;
+  <input type="time" id="sleep4" name="sleep4" required>&emsp;
+  <br>
+  <br>
+  Thursday:  &emsp;
+  <input type="time" id="wakeup5" name="wakeup5" required>&emsp;
+  <input type="time" id="sleep5" name="sleep5" required>&emsp;
+  <br>
+  <br>
+  Friday:  &emsp;
+  <input type="time" id="wakeup6" name="wakeup6" required>&emsp;
+  <input type="time" id="sleep6" name="sleep6" required>&emsp;
+  <br>
+  <br>
+  Saturday:  &emsp;
+  <input type="time" id="wakeup7" name="wakeup7" required>&emsp;
+  <input type="time" id="sleep7" name="sleep7" required>&emsp;&emsp;
+  <button type="Submit" id=button name=button>Next</button>
+<center>
+</form>
+
+
+
+<script>
+function weekdaysFunc() {
+  var weekdays= document.getElementById("weekdays");
+  if (weekdays.checked == true){
+    wakeupTime = document.getElementById("wakeup1").value
+    sleepTime = document.getElementById("sleep1").value
+    for (i=2; i<6; i++){
+    document.getElementById("wakeup"+i).value = wakeupTime;
+    document.getElementById("sleep"+i).value= sleepTime;
+  }  //Changes values of input boxes on weekdays and sets them equal to the times entered on Sunday if the Same for All Weekdays box is checked
+  }
+  else {
+    for (i=2; i<6; i++){
+      document.getElementById("wakeup"+i).value =""
+      document.getElementById("sleep"+i).value = "";
+  } //Changes values of all the input values for weekdays to blank if the Same for All Weekdays box is unchecked
+}
+} 
+function alldaysFunc(){
+  var allDays = document.getElementById("alldays");
+  if (allDays.checked == true){
+    wakeupTime = document.getElementById("wakeup1").value;
+    sleepTime = document.getElementById("sleep1").value
+    for (i=2; i<8; i++){
+      document.getElementById("wakeup"+i).value = wakeupTime;
+      document.getElementById("sleep"+i).value= sleepTime;
+    }  //Changes values of input boxes on days of the week and sets them equal to the times entered on Sunday if the Same for All Week box is checked
+  }
+  else{
+    for (i=2; i<8; i++){
+      document.getElementById("wakeup"+i).value = "";
+      document.getElementById("sleep"+i).value = "";
+    }  //Changes values of all the input values for all days of the week to blank if the Same for All Week box is unchecked
+  }
+}
+</script>
+
+{% endblock %}

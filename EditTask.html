@@ -1,0 +1,34 @@
+<html>
+{% extends 'base.html' %}
+
+{% block head %}
+<center><h2><u>Edit Tasks</u></h2></center>
+{% endblock %}
+
+
+{% block body %}
+<br>
+<center><font color="red">{{error}}</font></center>
+<center>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <font color="red"><li>{{ message }}</li></font>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<br>
+
+<input type="button" onclick="location.href='http://localhost:5000/DeleteTasks';" value ="Delete Tasks"/>&emsp;&emsp;&emsp;<input type="button" onclick="location.href='http://localhost:5000/tasks';" value ="Add Tasks"/>
+<br>
+<br>
+<br>
+<input type="button" onclick="location.href='http://localhost:5000/EditSubjects';" value ="Edit Subjects"/>
+</center>
+{% endblock %}
+
+
+
+</html>
