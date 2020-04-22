@@ -12,3 +12,4 @@ Programming languages used:
 - Ajax
 - Jinja2
 - PHP
+- SQLite
